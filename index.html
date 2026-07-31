@@ -11,8 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Shared site header -->
-  <link rel="stylesheet" href="css/site-header.css">
 
   <style>
     /* ==========================================================================
@@ -24,6 +22,73 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f8fafc;
       color: #0f172a;
+    }
+
+    /* ==========================================================================
+       SITE-WIDE HEADER — right-aligned pill nav bar
+       Quiz | Finance Toolkit | Smart Investor
+       ========================================================================== */
+    :root { --site-header-h: 64px; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: var(--site-header-h);
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      box-sizing: border-box;
+    }
+
+    .site-header-inner {
+      max-width: 1400px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .site-nav-bar {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      padding: 4px;
+    }
+
+    .site-nav-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 9px 18px;
+      border-radius: 999px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .site-nav-link:hover {
+      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .site-nav-link.active {
+      color: #f8fafc;
+      background: #8b0000;
+    }
+
+    .site-nav-brand {
+      font-weight: 800;
+      letter-spacing: -0.2px;
+    }
+
+    @media (max-width: 560px) {
+      .site-header-inner { padding: 0 12px; }
+      .site-nav-link { padding: 8px 12px; font-size: 0.78rem; }
     }
 
     /* ==========================================================================
@@ -206,11 +271,13 @@
        ========================================================================== */
     #page-quiz {
       background: #0b0d12;
-      min-height: calc(100vh - var(--site-header-h));
+      padding: 32px 16px;
+    }
+    .quiz-page-wrap {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 32px 16px;
+      min-height: calc(100vh - var(--site-header-h));
     }
   #cse-risk-quiz-root {
     --ink: #12151c;
@@ -1054,10 +1121,9 @@
   <!-- Site-wide Header -->
   <header class="site-header">
     <div class="site-header-inner">
-      <a href="#" onclick="showPage('intro'); return false;" class="site-brand"><i class="fa-solid fa-coins"></i> <span>Personal Finance Toolkit</span></a>
-      <nav class="site-nav">
-        <a href="#" onclick="showPage('intro'); return false;" class="site-nav-link active" id="nav-intro">Intro</a>
+      <nav class="site-nav-bar">
         <a href="#" onclick="showPage('quiz'); return false;" class="site-nav-link" id="nav-quiz">Quiz</a>
+        <a href="#" onclick="showPage('intro'); return false;" class="site-nav-link site-nav-brand active" id="nav-intro">Finance Toolkit</a>
         <a href="#" onclick="showPage('investor'); return false;" class="site-nav-link" id="nav-investor">Smart Investor</a>
       </nav>
     </div>
@@ -1113,7 +1179,9 @@
 
   <!-- ===================== QUIZ PAGE ===================== -->
   <div class="toolkit-page" id="page-quiz">
-    <div id="cse-risk-quiz-root"></div>
+    <div class="quiz-page-wrap">
+      <div id="cse-risk-quiz-root"></div>
+    </div>
   </div>
 
   <!-- ===================== SMART INVESTOR PAGE ===================== -->
