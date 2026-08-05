@@ -7,7 +7,8 @@
   <meta name="description" content="A simple toolkit to find your risk profile and track your budget — built for students and young professionals.">
 
   <!-- Google Fonts & FontAwesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,76 +20,123 @@
     html, body { margin: 0; padding: 0; }
     *, *::before, *::after { box-sizing: border-box; }
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f8fafc;
-      color: #0f172a;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #faf7f2;
+      color: #1a1a1a;
     }
 
     /* ==========================================================================
-       SITE-WIDE HEADER — right-aligned pill nav bar
-       Quiz | Finance Toolkit | Smart Investor
+       SITE-WIDE HEADER — IFSA LSR-style horizontal top bar
+       Logo/wordmark left, text nav links right, light bg with thin border
        ========================================================================== */
-    :root { --site-header-h: 64px; }
+    :root {
+      --site-header-h: 76px;
+      --maroon: #7a1f2b;
+      --maroon-dark: #591620;
+      --ink: #1a1a1a;
+      --ink-soft: #6b6560;
+      --ivory: #faf7f2;
+      --hairline: #e7e0d6;
+    }
 
     .site-header {
       position: sticky;
       top: 0;
       z-index: 1000;
       height: var(--site-header-h);
-      background: #0f172a;
-      border-bottom: 1px solid #1e293b;
+      background: #fffdfa;
+      border-bottom: 1px solid var(--hairline);
       box-sizing: border-box;
     }
 
     .site-header-inner {
-      max-width: 1400px;
+      max-width: 1280px;
       height: 100%;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 32px;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .site-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .site-logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--maroon);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .site-logo-text {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      letter-spacing: -0.2px;
+      line-height: 1.1;
+      white-space: nowrap;
     }
 
     .site-nav-bar {
       display: flex;
       align-items: center;
-      gap: 2px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 999px;
-      padding: 4px;
+      gap: 36px;
     }
 
     .site-nav-link {
-      color: #94a3b8;
+      position: relative;
+      color: var(--ink-soft);
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.88rem;
-      padding: 9px 18px;
-      border-radius: 999px;
-      transition: all 0.15s ease;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 6px 0;
+      transition: color 0.15s ease;
       white-space: nowrap;
     }
 
-    .site-nav-link:hover {
-      color: #f8fafc;
-      background: rgba(255, 255, 255, 0.08);
+    .site-nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: var(--maroon);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
     }
+
+    .site-nav-link:hover { color: var(--ink); }
+    .site-nav-link:hover::after { transform: scaleX(1); }
 
     .site-nav-link.active {
-      color: #f8fafc;
-      background: #8b0000;
+      color: var(--ink);
     }
-
-    .site-nav-brand {
-      font-weight: 800;
-      letter-spacing: -0.2px;
-    }
+    .site-nav-link.active::after { transform: scaleX(1); }
 
     @media (max-width: 560px) {
-      .site-header-inner { padding: 0 12px; }
-      .site-nav-link { padding: 8px 12px; font-size: 0.78rem; }
+      .site-header-inner { padding: 0 16px; }
+      .site-nav-bar { gap: 18px; }
+      .site-logo-text { display: none; }
+      .site-nav-link { font-size: 0.72rem; }
     }
 
     /* ==========================================================================
@@ -99,100 +147,235 @@
 
     /* ==========================================================================
        INTRO PAGE STYLES (scoped to #page-intro)
+       IFSA LSR-inspired: editorial serif headline, ivory/maroon palette
        ========================================================================== */
     #page-intro {
-    background: #f8fafc;
-    color: #0f172a;
+    background: var(--ivory);
+    color: var(--ink);
   }
 
   #page-intro .hero {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 80px 24px 48px;
+    padding: 96px 24px 64px;
     text-align: center;
   }
 
   #page-intro .hero-eyebrow {
-    display: inline-block;
-    font-size: 0.8rem;
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #8b0000;
-    background: #fdf2f2;
-    padding: 6px 14px;
-    border-radius: 30px;
-    margin-bottom: 20px;
+    color: var(--maroon);
+    margin-bottom: 22px;
   }
 
   #page-intro .hero h1 {
-    font-size: 2.75rem;
-    font-weight: 800;
-    letter-spacing: -1px;
-    line-height: 1.15;
-    margin-bottom: 18px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 3.4rem;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    line-height: 1.12;
+    margin-bottom: 24px;
+    color: var(--ink);
   }
 
   #page-intro .hero p.lede {
-    font-size: 1.1rem;
-    color: #64748b;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.08rem;
+    color: var(--ink-soft);
     max-width: 620px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.7;
+  }
+
+  #page-intro .hero-ctas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  #page-intro .btn-maroon,
+  #page-intro .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 13px 26px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+  }
+
+  #page-intro .btn-maroon {
+    background: var(--maroon);
+    color: #fff;
+  }
+  #page-intro .btn-maroon:hover { background: var(--maroon-dark); }
+
+  #page-intro .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid #d8cfc0;
+  }
+  #page-intro .btn-outline:hover { border-color: var(--maroon); color: var(--maroon); }
+
+  /* --- Introducing section (mirrors IFSA's "Who We Are") --- */
+  #page-intro .introducing {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  #page-intro .introducing-copy .section-eyebrow {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--maroon);
+    margin-bottom: 14px;
+  }
+
+  #page-intro .introducing-copy h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 2.1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+
+  #page-intro .introducing-copy p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  #page-intro .introducing-visual {
+    border-radius: 8px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background-color: var(--hairline);
+    overflow: hidden;
+  }
+
+  #page-intro .introducing-stat {
+    background: var(--maroon);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  #page-intro .introducing-stat .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: #fff;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  #page-intro .introducing-stat .stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
   }
 
   #page-intro .cards {
-    max-width: 1000px;
-    margin: 48px auto 0;
-    padding: 0 24px 96px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 100px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
 
+  #page-intro .cards-eyebrow {
+    display: block;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--maroon);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  #page-intro .cards-heading {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.9rem;
+    font-weight: 500;
+    text-align: center;
+    max-width: 1100px;
+    margin: 12px auto 44px;
+    padding: 0 24px;
+    color: var(--ink);
+  }
+
   #page-intro .card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 32px;
+    background: #fffdfa;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 36px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
   #page-intro .card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 24px -8px rgba(122, 31, 43, 0.15);
   }
 
   #page-intro .card-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
-    margin-bottom: 20px;
+    font-size: 1.2rem;
+    margin-bottom: 22px;
     color: #fff;
   }
 
-  #page-intro .card.quiz .card-icon { background: #12151c; }
-  #page-intro .card.investor .card-icon { background: #8b0000; }
+  #page-intro .card.quiz .card-icon { background: var(--ink); }
+  #page-intro .card.investor .card-icon { background: var(--maroon); }
 
-  #page-intro .card h2 {
-    font-size: 1.3rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    letter-spacing: -0.3px;
+  #page-intro .card h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--ink);
   }
 
   #page-intro .card p {
-    color: #64748b;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink-soft);
     font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 24px;
+    line-height: 1.65;
+    margin-bottom: 26px;
     flex-grow: 1;
   }
 
@@ -202,68 +385,75 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
-    font-size: 0.9rem;
-    padding: 12px 20px;
-    border-radius: 10px;
-    color: #fff;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--maroon);
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--maroon);
     transition: opacity 0.15s ease;
   }
 
-  #page-intro .card a.card-cta:hover { opacity: 0.88; }
-
-  #page-intro .card.quiz a.card-cta { background: #12151c; }
-  #page-intro .card.investor a.card-cta { background: #8b0000; }
+  #page-intro .card a.card-cta:hover { opacity: 0.7; }
 
   #page-intro .features {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 24px 96px;
+    padding: 0 24px 110px;
+    border-top: 1px solid var(--hairline);
+    padding-top: 64px;
   }
 
   #page-intro .features h3 {
     text-align: center;
-    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #94a3b8;
-    margin-bottom: 28px;
+    color: var(--maroon);
+    margin-bottom: 40px;
   }
 
   #page-intro .features-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 32px;
   }
 
   #page-intro .feature {
     text-align: center;
-    padding: 20px;
+    padding: 8px 16px;
   }
 
   #page-intro .feature i {
-    font-size: 1.4rem;
-    color: #8b0000;
-    margin-bottom: 12px;
+    font-size: 1.3rem;
+    color: var(--maroon);
+    margin-bottom: 16px;
   }
 
   #page-intro .feature h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 6px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--ink);
   }
 
   #page-intro .feature p {
-    font-size: 0.85rem;
-    color: #64748b;
-    line-height: 1.5;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
   }
 
-  @media (max-width: 700px) {
-    #page-intro .hero h1 { font-size: 2rem; }
+  @media (max-width: 760px) {
+    #page-intro .hero h1 { font-size: 2.3rem; }
+    #page-intro .introducing { grid-template-columns: 1fr; gap: 36px; }
     #page-intro .cards { grid-template-columns: 1fr; }
-    #page-intro .features-grid { grid-template-columns: 1fr; }
+    #page-intro .features-grid { grid-template-columns: 1fr; gap: 28px; }
   }
 
     /* ==========================================================================
@@ -1121,9 +1311,13 @@
   <!-- Site-wide Header -->
   <header class="site-header">
     <div class="site-header-inner">
+      <a href="#" onclick="showPage('intro'); return false;" class="site-logo">
+        <span class="site-logo-mark">₹</span>
+        <span class="site-logo-text">Personal Finance Toolkit</span>
+      </a>
       <nav class="site-nav-bar">
+        <a href="#" onclick="showPage('intro'); return false;" class="site-nav-link active" id="nav-intro">Intro</a>
         <a href="#" onclick="showPage('quiz'); return false;" class="site-nav-link" id="nav-quiz">Quiz</a>
-        <a href="#" onclick="showPage('intro'); return false;" class="site-nav-link site-nav-brand active" id="nav-intro">Finance Toolkit</a>
         <a href="#" onclick="showPage('investor'); return false;" class="site-nav-link" id="nav-investor">Smart Investor</a>
       </nav>
     </div>
@@ -1136,21 +1330,54 @@
     <span class="hero-eyebrow">Personal Finance Toolkit</span>
     <h1>Understand your money.<br>Grow it with confidence.</h1>
     <p class="lede">Two simple tools to get you started: a quick quiz that tells you your investment risk profile, and a full budgeting dashboard to track spending, set goals, and hit your savings targets.</p>
+    <div class="hero-ctas">
+      <a href="#" onclick="showPage('quiz'); return false;" class="btn-maroon">Take the Quiz <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="#" onclick="showPage('investor'); return false;" class="btn-outline">Open Dashboard</a>
+    </div>
   </section>
 
+  <section class="introducing">
+    <div class="introducing-copy">
+      <span class="section-eyebrow">Introducing</span>
+      <h2>A toolkit built for students figuring out money for the first time.</h2>
+      <p>No jargon, no sign-up walls, no assumptions about what you already know. Just two straightforward tools that meet you where you are — whether that's your first payslip or your first SIP.</p>
+      <p>Everything runs locally in your browser, so you can explore freely without handing over your financial details to anyone.</p>
+    </div>
+    <div class="introducing-visual">
+      <div class="introducing-stat">
+        <span class="stat-num">10</span>
+        <span class="stat-label">Quiz Questions</span>
+      </div>
+      <div class="introducing-stat">
+        <span class="stat-num">2 min</span>
+        <span class="stat-label">To Your Risk Profile</span>
+      </div>
+      <div class="introducing-stat">
+        <span class="stat-num">₹0</span>
+        <span class="stat-label">Cost, Always</span>
+      </div>
+      <div class="introducing-stat">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Runs In-Browser</span>
+      </div>
+    </div>
+  </section>
+
+  <span class="cards-eyebrow">Explore</span>
+  <h2 class="cards-heading">What's inside the toolkit</h2>
   <section class="cards">
     <div class="card quiz">
       <div class="card-icon"><i class="fa-solid fa-gauge-high"></i></div>
-      <h2>Risk & Financial Personality Quiz</h2>
+      <h3>Risk & Financial Personality Quiz</h3>
       <p>Ten quick questions on how you handle risk, spending, and surprises with money. Takes about 2 minutes and ends with a risk profile plus tailored product and learning suggestions.</p>
-      <a href="#" onclick="showPage('quiz'); return false;" class="card-cta">Take the quiz <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="#" onclick="showPage('quiz'); return false;" class="card-cta">Take the Quiz <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
     <div class="card investor">
       <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
-      <h2>Smart Investor</h2>
+      <h3>Smart Investor</h3>
       <p>A full budget and expense tracker: log transactions, set category budgets, create savings goals, and see spending analytics — all in one dashboard.</p>
-      <a href="#" onclick="showPage('investor'); return false;" class="card-cta">Open dashboard <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="#" onclick="showPage('investor'); return false;" class="card-cta">Open Dashboard <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </section>
 
