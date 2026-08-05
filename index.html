@@ -486,7 +486,7 @@
     color: var(--vellum);
     padding: 48px 20px;
     border-radius: 20px;
-    max-width: 640px;
+    max-width: 720px;
     margin: 0 auto;
   }
   #cse-risk-quiz-root *, #cse-risk-quiz-root *:before, #cse-risk-quiz-root *:after { box-sizing: border-box; }
@@ -497,20 +497,28 @@
     text-transform: uppercase;
     color: var(--signal);
     margin: 0 0 10px;
+    text-align: center;
   }
   #cse-risk-quiz-root h1 {
     font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
     font-weight: 600;
-    font-size: 30px;
+    font-size: 34px;
     line-height: 1.2;
-    margin: 0 0 14px;
+    margin: 0 0 12px;
     color: var(--vellum);
+    text-align: center;
   }
   #cse-risk-quiz-root p.rq-lede {
     font-size: 15px;
     line-height: 1.6;
     color: var(--ash);
-    margin: 0 0 30px;
+    margin: 0 0 34px;
+    text-align: center;
+    font-style: italic;
+  }
+  #cse-risk-quiz-root .rq-start-wrap {
+    display: flex;
+    justify-content: center;
   }
 
   /* --- Signature element: the risk needle --- */
@@ -521,12 +529,16 @@
     display: flex;
     justify-content: space-between;
     font-family: 'IBM Plex Mono', 'Courier New', monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
+    font-size: 10px;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--ash);
     margin-bottom: 8px;
+    gap: 4px;
   }
+  #cse-risk-quiz-root .rq-gauge-labels span { flex: 1; text-align: center; }
+  #cse-risk-quiz-root .rq-gauge-labels span:first-child { text-align: left; }
+  #cse-risk-quiz-root .rq-gauge-labels span:last-child { text-align: right; }
   #cse-risk-quiz-root .rq-gauge-track {
     position: relative;
     height: 3px;
@@ -580,34 +592,82 @@
   }
   #cse-risk-quiz-root .rq-question {
     font-family: 'Fraunces', Georgia, serif;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 500;
-    line-height: 1.4;
-    margin: 0 0 22px;
+    line-height: 1.45;
+    margin: 0 0 20px;
   }
-  #cse-risk-quiz-root .rq-options {
+
+  /* --- Q8 illustrative chart --- */
+  #cse-risk-quiz-root .rq-chart-wrap {
+    background: rgba(237, 230, 214, 0.03);
+    border: 1px solid rgba(237, 230, 214, 0.1);
+    border-radius: 10px;
+    padding: 18px 18px 10px;
+    margin: 0 0 20px;
+  }
+  #cse-risk-quiz-root .rq-chart-note {
+    font-size: 11px;
+    color: var(--ash);
+    text-align: center;
+    margin: 10px 0 0;
+    font-style: italic;
+  }
+  #cse-risk-quiz-root .rq-chart-legend {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ash);
+  }
+  #cse-risk-quiz-root .rq-chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  #cse-risk-quiz-root .rq-chart-legend i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
+  /* --- Options: 2x2 grid, per sketch --- */
+  #cse-risk-quiz-root .rq-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
   #cse-risk-quiz-root button.rq-option {
     all: unset;
     box-sizing: border-box;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     width: 100%;
-    padding: 14px 16px;
+    padding: 16px 16px;
     background: rgba(237, 230, 214, 0.03);
     border: 1px solid rgba(237, 230, 214, 0.18);
     border-radius: 10px;
     color: var(--vellum);
-    font-size: 14.5px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 1.4;
     cursor: pointer;
     transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+  #cse-risk-quiz-root button.rq-option .rq-opt-letter {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(237, 230, 214, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ash);
   }
   #cse-risk-quiz-root button.rq-option:hover {
     border-color: var(--signal);
     background: rgba(217, 142, 43, 0.08);
+  }
+  #cse-risk-quiz-root button.rq-option:hover .rq-opt-letter {
+    border-color: var(--signal);
+    color: var(--signal);
   }
   #cse-risk-quiz-root button.rq-option:focus-visible {
     outline: 2px solid var(--signal);
@@ -638,14 +698,21 @@
   }
 
   /* --- Result screen --- */
+  #cse-risk-quiz-root .rq-result-score {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ash);
+    margin: 0 0 4px;
+  }
   #cse-risk-quiz-root .rq-result-band {
     font-family: 'Fraunces', Georgia, serif;
-    font-size: 34px;
+    font-size: 32px;
     font-weight: 600;
     margin: 4px 0 6px;
   }
   #cse-risk-quiz-root .rq-result-band.conservative { color: #6fae8c; }
-  #cse-risk-quiz-root .rq-result-band.moderate { color: var(--signal); }
+  #cse-risk-quiz-root .rq-result-band.mod-conservative { color: #8fbf9f; }
+  #cse-risk-quiz-root .rq-result-band.mod-aggressive { color: var(--signal); }
   #cse-risk-quiz-root .rq-result-band.aggressive { color: #d97757; }
   #cse-risk-quiz-root .rq-result-desc {
     font-size: 15px;
@@ -661,6 +728,33 @@
     color: var(--ash);
     margin: 0 0 12px;
   }
+
+  /* --- Suggested asset allocation bar --- */
+  #cse-risk-quiz-root .rq-alloc-bar {
+    display: flex;
+    height: 34px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  #cse-risk-quiz-root .rq-alloc-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+  }
+  #cse-risk-quiz-root .rq-alloc-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  #cse-risk-quiz-root .rq-alloc-legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--ash); }
+  #cse-risk-quiz-root .rq-alloc-legend i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
   #cse-risk-quiz-root ul.rq-reco {
     list-style: none;
     margin: 0 0 28px;
@@ -692,22 +786,26 @@
     all: unset;
     box-sizing: border-box;
     display: inline-block;
-    padding: 14px 26px;
+    padding: 15px 40px;
     background: var(--ledger);
     color: var(--vellum);
     font-family: 'Inter', sans-serif;
-    font-size: 14.5px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     border-radius: 10px;
     cursor: pointer;
     transition: background 0.2s ease;
   }
   #cse-risk-quiz-root button.rq-start:hover { background: var(--ledger-dim); }
 
-  @media (max-width: 480px) {
+  @media (max-width: 560px) {
     #cse-risk-quiz-root { padding: 32px 16px; }
     #cse-risk-quiz-root h1 { font-size: 24px; }
-    #cse-risk-quiz-root .rq-question { font-size: 18px; }
+    #cse-risk-quiz-root .rq-question { font-size: 17px; }
+    #cse-risk-quiz-root .rq-options { grid-template-columns: 1fr; }
+    #cse-risk-quiz-root .rq-gauge-labels span { font-size: 8px; }
   }
   @media (prefers-reduced-motion: reduce) {
     #cse-risk-quiz-root .rq-gauge-fill,
@@ -1881,145 +1979,177 @@
 (function() {
   var root = document.getElementById('cse-risk-quiz-root');
 
+  /* Each question has a weight (1 = normal, 2 = double-weighted per spec).
+     Options are always listed a→d in increasing risk-tolerance order,
+     so base points are always 1,2,3,4 — actual score = basePts * weight. */
   var QUESTIONS = [
     {
-      text: "Your portfolio drops 20% in a month. What do you do?",
+      weight: 1,
+      text: "Which statement best describes your current financial situation?",
       options: [
-        { label: "Sell everything to stop further loss", pts: 1 },
-        { label: "Sell part of it to reduce exposure", pts: 2 },
-        { label: "Hold and wait it out", pts: 3 },
-        { label: "Buy more while prices are low", pts: 4 }
+        "I rely almost entirely on others for my expenses",
+        "I have some personal income but rely on family for major expenses",
+        "I cover most of my expenses through my own income",
+        "I am financially independent with regular savings"
       ]
     },
     {
-      text: "Which outcome would you rather have over 10 years?",
+      weight: 1,
+      text: "If you lost your primary source of income today, how long could you comfortably manage using your savings?",
       options: [
-        { label: "Slow, steady, predictable growth", pts: 1 },
-        { label: "Mostly steady, with occasional dips", pts: 2 },
-        { label: "Choppy ride, but higher average return", pts: 3 },
-        { label: "High swings for a shot at much higher return", pts: 4 }
+        "Less than 1 month",
+        "1–3 months",
+        "3–6 months",
+        "More than 6 months"
       ]
     },
     {
-      text: "How many months of expenses does your emergency fund cover?",
+      weight: 2,
+      text: "What is your primary investment time horizon?",
       options: [
-        { label: "Less than 1 month, or none", pts: 1 },
-        { label: "1 to 3 months", pts: 2 },
-        { label: "3 to 6 months", pts: 3 },
-        { label: "6 months or more", pts: 4 }
+        "Less than 2 years",
+        "2–5 years",
+        "5–10 years",
+        "More than 10 years"
       ]
     },
     {
-      text: "An unexpected expense comes up. What's your first move?",
+      weight: 1,
+      text: "When it comes to investing in stock or bond mutual funds or ETFs, or individual stocks or bonds, how would you describe yourself?",
       options: [
-        { label: "Cut spending elsewhere immediately", pts: 1 },
-        { label: "Dip into savings", pts: 2 },
-        { label: "Use a credit card and pay it off over time", pts: 3 },
-        { label: "Not worried, it's already budgeted for", pts: 4 }
+        "Very inexperienced",
+        "Somewhat inexperienced",
+        "Somewhat experienced",
+        "Very experienced"
       ]
     },
     {
-      text: "How would you describe your investing experience?",
+      weight: 2,
+      text: "Suppose you inherit ₹1 crore, with the condition that you must invest the entire amount in only ONE of the following options. Which would you choose?",
       options: [
-        { label: "None, this would be my first time", pts: 1 },
-        { label: "A little, mostly fixed deposits or savings schemes", pts: 2 },
-        { label: "Some, mutual funds or index funds", pts: 3 },
-        { label: "Experienced, including direct equity or derivatives", pts: 4 }
+        "A high-interest savings account or money market fund",
+        "A diversified balanced mutual fund (mix of equity and debt)",
+        "A diversified equity index fund or equity mutual fund",
+        "A concentrated portfolio of individual high-growth stocks"
       ]
     },
     {
-      text: "How long before you'd need to withdraw this money?",
+      weight: 2,
+      text: "From September 2008 through November 2008, stocks lost over 31%. If you owned a stock investment that lost about 31% in three months, you would:",
       options: [
-        { label: "Under 1 year", pts: 1 },
-        { label: "1 to 3 years", pts: 2 },
-        { label: "3 to 7 years", pts: 3 },
-        { label: "7+ years", pts: 4 }
+        "Sell all the remaining investment",
+        "Sell a portion of the remaining investment",
+        "Hold onto the investment and sell nothing",
+        "Buy more of the investment and sell nothing"
       ]
     },
     {
-      text: "A friend mentions a stock is down 15% this week. Your instinct?",
+      weight: 1,
+      text: "You inherit a mortgage-free house worth approximately ₹1.5 crore, in a desirable neighbourhood expected to appreciate over time. If rented today, it could generate ₹45,000/month. After renovations costing ₹15 lakh (financed via a home improvement loan), it could generate ₹70,000/month. What would you most likely do?",
       options: [
-        { label: "Avoid it, feels too risky", pts: 1 },
-        { label: "Wait and watch before deciding either way", pts: 2 },
-        { label: "Look into why, could be a buying chance", pts: 3 },
-        { label: "Consider buying more if the fundamentals hold", pts: 4 }
+        "Sell the house and invest the proceeds elsewhere",
+        "Rent the house in its current condition without taking on any debt",
+        "Save up for the renovations first, then renovate and rent out the property",
+        "Take the loan, renovate the property immediately, and rent it out at the higher rate"
       ]
     },
     {
-      text: "How stable is your income right now?",
+      weight: 2,
+      chart: true,
+      text: "The chart shows the greatest 1-year loss and the highest 1-year gain on 3 different hypothetical investments of ₹10,000. Given the potential gain or loss in any 1 year, which one would you invest in?",
       options: [
-        { label: "Irregular or uncertain", pts: 1 },
-        { label: "Mostly stable, some variability", pts: 2 },
-        { label: "Stable and predictable", pts: 3 },
-        { label: "Stable, with multiple income sources", pts: 4 }
+        "None of these — I wouldn't invest in any",
+        "A — minimal volatility",
+        "B — moderate volatility",
+        "C — maximum volatility"
       ]
     },
     {
-      text: "How do you feel about taking on debt to invest or grow wealth?",
+      weight: 1,
+      text: "You invest for the long term. After 6 months, you haven't checked your portfolio at all. Which statement best describes how you would feel?",
       options: [
-        { label: "Strongly against it", pts: 1 },
-        { label: "Only in specific, low-risk cases", pts: 2 },
-        { label: "Comfortable with it if the math works out", pts: 3 },
-        { label: "Actively use leverage as a strategy", pts: 4 }
+        "Extremely uncomfortable, I need to know how my investments are performing",
+        "Slightly uneasy, but I'd eventually check",
+        "Comfortable, provided my original investment reasons haven't changed",
+        "Extremely comfortable, it wouldn't occur to me to check"
       ]
     },
     {
-      text: "Which matters more to you, right now?",
+      weight: 1,
+      text: "You buy a stock at ₹100. Over the next week it fluctuates: ₹85, ₹70, ₹95, ₹60. What's your move?",
       options: [
-        { label: "Protecting what I already have", pts: 1 },
-        { label: "A bit of both, mostly protection", pts: 2 },
-        { label: "A bit of both, mostly growth", pts: 3 },
-        { label: "Growing my wealth as fast as possible", pts: 4 }
+        "Sell at the first sign of drop to cut losses",
+        "Set a stop-loss and exit if it's triggered",
+        "Hold, since short-term swings don't affect my plan",
+        "Buy more at ₹60 because of lower average cost, higher potential upside"
       ]
     }
   ];
 
-  var MIN_SCORE = QUESTIONS.length * 1;
-  var MAX_SCORE = QUESTIONS.length * 4;
+  var RAW_MIN = 14;
+  var RAW_MAX = 56;
 
-  var BANDS = {
-    conservative: {
-      label: "Conservative",
-      className: "conservative",
-      desc: "You prioritize protecting your capital over chasing returns. Steady, predictable outcomes matter more to you than the upside of a volatile bet, and that's a perfectly sound way to invest, especially for near-term goals or a first emergency fund.",
-      reco: [
-        "Fixed deposits, debt mutual funds, and government bonds as your core holdings",
-        "A short module on building and sizing an emergency fund before investing further",
-        "Systematic Investment Plans (SIPs) in large-cap or index funds for gentle equity exposure"
+  var BANDS = [
+    {
+      key: 'conservative',
+      className: 'conservative',
+      label: 'Conservative',
+      max: 25,
+      desc: "You prioritize protecting your capital above all else. Steady, predictable outcomes matter far more to you than the upside of a volatile bet — a sound approach if you're investing for the near term or don't yet have a cushion behind you.",
+      allocation: [
+        { label: 'Debt / Fixed Income', pct: 75, color: '#2f6f4e' },
+        { label: 'Equity', pct: 15, color: '#d98e2b' },
+        { label: 'Gold / Cash', pct: 10, color: '#9aa0a6' }
       ]
     },
-    moderate: {
-      label: "Moderate",
-      className: "moderate",
-      desc: "You're comfortable with some ups and downs if it means better long-term growth, but you still want guardrails. A balanced mix, rather than an all-in bet, fits how you actually react to market swings.",
-      reco: [
-        "A core-satellite mix of index funds plus a smaller allocation to active equity funds",
-        "Hybrid or balanced advantage funds to smooth out volatility",
-        "A learning module on asset allocation and rebalancing"
+    {
+      key: 'mod-conservative',
+      className: 'mod-conservative',
+      label: 'Moderately Conservative',
+      max: 50,
+      desc: "You're willing to accept some ups and downs for better long-term growth, but capital protection still comes first. A debt-heavy, equity-light mix fits how you actually react to market swings.",
+      allocation: [
+        { label: 'Debt / Fixed Income', pct: 55, color: '#2f6f4e' },
+        { label: 'Equity', pct: 35, color: '#d98e2b' },
+        { label: 'Gold / Cash', pct: 10, color: '#9aa0a6' }
       ]
     },
-    aggressive: {
-      label: "Aggressive",
-      className: "aggressive",
-      desc: "You're willing to ride out real volatility in exchange for higher long-term returns, and you tend to see dips as opportunities rather than warnings. Just make sure this matches money you won't need on short notice.",
-      reco: [
-        "Direct equity, small-cap and mid-cap funds, and thematic sector funds",
-        "A module on position sizing, so conviction doesn't turn into overexposure",
-        "A periodic review habit, since aggressive portfolios need closer monitoring"
+    {
+      key: 'mod-aggressive',
+      className: 'mod-aggressive',
+      label: 'Moderately Aggressive',
+      max: 75,
+      desc: "You're comfortable with real volatility in pursuit of stronger long-term returns, and you tend to see dips as noise rather than a reason to act. Equity does most of the heavy lifting in a portfolio like this.",
+      allocation: [
+        { label: 'Equity', pct: 60, color: '#d98e2b' },
+        { label: 'Debt / Fixed Income', pct: 30, color: '#2f6f4e' },
+        { label: 'Gold / Alternatives', pct: 10, color: '#9aa0a6' }
+      ]
+    },
+    {
+      key: 'aggressive',
+      className: 'aggressive',
+      label: 'Aggressive',
+      max: 100,
+      desc: "You're willing to ride out significant volatility in exchange for the highest long-term growth potential, and dips read as opportunities rather than warnings. Just make sure this is money you genuinely won't need on short notice.",
+      allocation: [
+        { label: 'Equity', pct: 85, color: '#d98e2b' },
+        { label: 'Debt / Fixed Income', pct: 10, color: '#2f6f4e' },
+        { label: 'Alternatives', pct: 5, color: '#9aa0a6' }
       ]
     }
-  };
+  ];
 
-  function scoreToBand(score) {
-    var range = MAX_SCORE - MIN_SCORE;
-    var pct = (score - MIN_SCORE) / range;
-    if (pct < 0.4) return BANDS.conservative;
-    if (pct < 0.7) return BANDS.moderate;
-    return BANDS.aggressive;
+  function scoreToBand(displayScore) {
+    for (var i = 0; i < BANDS.length; i++) {
+      if (displayScore <= BANDS[i].max) return BANDS[i];
+    }
+    return BANDS[BANDS.length - 1];
   }
 
-  function scoreToPct(score) {
-    return Math.round(((score - MIN_SCORE) / (MAX_SCORE - MIN_SCORE)) * 100);
+  function rawToDisplay(raw) {
+    var pct = ((raw - RAW_MIN) / (RAW_MAX - RAW_MIN)) * 100;
+    return Math.max(0, Math.min(100, Math.round(pct)));
   }
 
   var state = { screen: 'intro', index: 0, answers: [] };
@@ -2033,7 +2163,7 @@
   function gaugeHTML(pct) {
     return (
       '<div class="rq-gauge">' +
-        '<div class="rq-gauge-labels"><span>Conservative</span><span>Moderate</span><span>Aggressive</span></div>' +
+        '<div class="rq-gauge-labels"><span>Conservative</span><span>Mod. Conservative</span><span>Mod. Aggressive</span><span>Aggressive</span></div>' +
         '<div class="rq-gauge-track">' +
           '<div class="rq-gauge-fill" style="width:' + pct + '%"></div>' +
           '<div class="rq-gauge-needle" style="left:' + pct + '%"></div>' +
@@ -2042,12 +2172,63 @@
     );
   }
 
+  /* Illustrative hypothetical loss/gain chart for Q8 */
+  function chartHTML() {
+    var series = [
+      { name: 'A', loss: -5, gain: 12 },
+      { name: 'B', loss: -18, gain: 26 },
+      { name: 'C', loss: -34, gain: 48 }
+    ];
+    var maxAbs = 48;
+    var chartH = 160;
+    var zeroY = chartH * (48 / (48 + 34)); // proportion for baseline within total range
+    var barW = 46;
+    var groupGap = 60;
+    var svgW = 320;
+    var gainColor = '#2f6f4e';
+    var lossColor = '#b5533f';
+
+    function scaleY(val) {
+      return (val / maxAbs) * (chartH / 2);
+    }
+
+    var bars = '';
+    series.forEach(function(s, i) {
+      var cx = 40 + i * groupGap + i * 20;
+      var gainH = scaleY(s.gain);
+      var lossH = scaleY(Math.abs(s.loss));
+      bars +=
+        '<rect x="' + (cx - barW/2) + '" y="' + (zeroY - gainH) + '" width="' + barW + '" height="' + gainH + '" fill="' + gainColor + '" rx="3"></rect>' +
+        '<rect x="' + (cx - barW/2) + '" y="' + zeroY + '" width="' + barW + '" height="' + lossH + '" fill="' + lossColor + '" rx="3"></rect>' +
+        '<text x="' + cx + '" y="' + (zeroY - gainH - 8) + '" text-anchor="middle" font-size="11" fill="#ede6d6" font-family="IBM Plex Mono, monospace">+' + s.gain + '%</text>' +
+        '<text x="' + cx + '" y="' + (zeroY + lossH + 16) + '" text-anchor="middle" font-size="11" fill="#ede6d6" font-family="IBM Plex Mono, monospace">' + s.loss + '%</text>' +
+        '<text x="' + cx + '" y="' + (chartH + 18) + '" text-anchor="middle" font-size="13" fill="#9aa0a6" font-family="Inter, sans-serif" font-weight="700">' + s.name + '</text>';
+    });
+
+    var svg =
+      '<svg viewBox="0 0 ' + svgW + ' ' + (chartH + 30) + '" style="width:100%;height:auto;display:block;">' +
+        '<line x1="20" y1="' + zeroY + '" x2="' + (svgW - 20) + '" y2="' + zeroY + '" stroke="#9aa0a6" stroke-width="1" opacity="0.3"></line>' +
+        bars +
+      '</svg>';
+
+    return (
+      '<div class="rq-chart-wrap">' +
+        svg +
+        '<div class="rq-chart-legend">' +
+          '<span><i style="background:' + gainColor + '"></i>Best 1-yr gain</span>' +
+          '<span><i style="background:' + lossColor + '"></i>Worst 1-yr loss</span>' +
+        '</div>' +
+        '<p class="rq-chart-note">*Hypothetical example, for illustration only</p>' +
+      '</div>'
+    );
+  }
+
   function renderIntro() {
     root.innerHTML =
-      '<p class="rq-eyebrow">Risk & Financial Personality</p>' +
-      '<h1>What kind of investor are you, really?</h1>' +
-      '<p class="rq-lede">Ten quick questions on how you handle risk, spending, and surprises with money. Takes about 2 minutes. At the end you\'ll get a risk profile and a few product and learning suggestions to match it.</p>' +
-      '<button class="rq-start" id="rq-begin">Begin assessment &rarr;</button>';
+      '<p class="rq-eyebrow">Risk Assessment</p>' +
+      '<h1>What kind of investor are you?</h1>' +
+      '<p class="rq-lede">A risk assessment quiz</p>' +
+      '<div class="rq-start-wrap"><button class="rq-start" id="rq-begin">Play</button></div>';
     document.getElementById('rq-begin').addEventListener('click', function() {
       state.screen = 'quiz';
       state.index = 0;
@@ -2058,20 +2239,25 @@
   function renderQuiz() {
     var q = QUESTIONS[state.index];
     var answeredSoFar = state.answers.slice(0, state.index);
-    var runningScore = answeredSoFar.reduce(function(a, b) { return a + b; }, 0)
-      + (QUESTIONS.length - answeredSoFar.length) * 2.5; // neutral baseline for unanswered
-    var pct = scoreToPct(runningScore);
+    var runningRaw = answeredSoFar.reduce(function(a, b) { return a + b; }, 0)
+      + (QUESTIONS.length - answeredSoFar.length) * 2.5; // neutral baseline for unanswered questions
+    var pct = rawToDisplay(runningRaw);
 
-    var optionsHTML = q.options.map(function(opt, i) {
-      return '<button class="rq-option" data-pts="' + opt.pts + '">' + opt.label + '</button>';
+    var letters = ['A', 'B', 'C', 'D'];
+    var optionsHTML = q.options.map(function(label, i) {
+      var basePts = i + 1;
+      return '<button class="rq-option" data-pts="' + (basePts * q.weight) + '">' +
+        '<span class="rq-opt-letter">' + letters[i] + '</span><span>' + label + '</span>' +
+        '</button>';
     }).join('');
 
     root.innerHTML =
-      '<p class="rq-eyebrow">Risk & Financial Personality</p>' +
+      '<p class="rq-eyebrow">Risk Assessment</p>' +
       gaugeHTML(pct) +
       '<div class="rq-card">' +
         '<p class="rq-qnum">Question ' + (state.index + 1) + ' of ' + QUESTIONS.length + '</p>' +
         '<p class="rq-question">' + q.text + '</p>' +
+        (q.chart ? chartHTML() : '') +
         '<div class="rq-options">' + optionsHTML + '</div>' +
         '<div class="rq-nav">' +
           '<button class="rq-back" ' + (state.index === 0 ? 'disabled' : '') + '>&larr; Back</button>' +
@@ -2102,23 +2288,28 @@
   }
 
   function renderResult() {
-    var score = state.answers.reduce(function(a, b) { return a + b; }, 0);
-    var pct = scoreToPct(score);
-    var band = scoreToBand(score);
+    var raw = state.answers.reduce(function(a, b) { return a + b; }, 0);
+    var pct = rawToDisplay(raw);
+    var band = scoreToBand(pct);
 
-    var recoHTML = band.reco.map(function(r) {
-      return '<li>' + r + '</li>';
+    var allocBar = band.allocation.map(function(a) {
+      return '<div class="rq-alloc-seg" style="width:' + a.pct + '%; background:' + a.color + ';">' + a.pct + '%</div>';
+    }).join('');
+
+    var allocLegend = band.allocation.map(function(a) {
+      return '<span><i style="background:' + a.color + '"></i>' + a.label + '</span>';
     }).join('');
 
     root.innerHTML =
-      '<p class="rq-eyebrow">Your result</p>' +
+      '<p class="rq-eyebrow">Your Result</p>' +
       gaugeHTML(pct) +
       '<div class="rq-card">' +
-        '<p class="rq-qnum">Risk profile</p>' +
+        '<p class="rq-result-score">Score: ' + pct + ' / 100 (raw ' + raw + ' / ' + RAW_MAX + ')</p>' +
         '<p class="rq-result-band ' + band.className + '">' + band.label + '</p>' +
         '<p class="rq-result-desc">' + band.desc + '</p>' +
-        '<p class="rq-reco-title">Suggested next steps</p>' +
-        '<ul class="rq-reco">' + recoHTML + '</ul>' +
+        '<p class="rq-reco-title">Suggested Asset Allocation</p>' +
+        '<div class="rq-alloc-bar">' + allocBar + '</div>' +
+        '<div class="rq-alloc-legend">' + allocLegend + '</div>' +
         '<button class="rq-restart" id="rq-restart">Retake the assessment</button>' +
       '</div>';
 
