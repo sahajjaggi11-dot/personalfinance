@@ -1402,7 +1402,165 @@
       #page-investor .gamify-row { grid-template-columns: 1fr; }
     }
 
-  </style>
+  
+    /* ======================================================================
+       INVESTING TRAIL / MONEYTRAIL
+       Standalone recreation of the MoneyTrail React experience.
+       ====================================================================== */
+    #page-moneytrail { --mt-bg:#fffdf7; --mt-card:#ffffff; --mt-ink:#19161f; --mt-primary:#5b2a86; --mt-primary-dark:#3d1c5c; --mt-secondary:#48a868; --mt-gold:#f4c95d; --mt-muted:#eeeaf4; --mt-text-muted:#696473; --mt-accent:#ef7d32; background:var(--mt-bg); color:var(--mt-ink); min-height:calc(100vh - var(--site-header-h)); font-family:'Inter',sans-serif; }
+    #page-moneytrail * { box-sizing:border-box; }
+    #page-moneytrail button { font-family:inherit; }
+    #page-moneytrail .mt-shell { min-height:calc(100vh - var(--site-header-h)); }
+    #page-moneytrail .mt-progress { position:sticky; top:var(--site-header-h); z-index:80; border-bottom:2px solid var(--mt-ink); background:rgba(255,253,247,.92); backdrop-filter:blur(10px); }
+    #page-moneytrail .mt-progress-inner { max-width:960px; margin:0 auto; display:flex; align-items:center; gap:12px; padding:10px 20px; }
+    #page-moneytrail .mt-logo { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:2px solid var(--mt-ink); border-radius:9px; background:var(--mt-primary); color:#fff; flex:0 0 auto; }
+    #page-moneytrail .mt-brand { font-weight:800; font-size:.9rem; white-space:nowrap; }
+    #page-moneytrail .mt-progress-track { height:12px; flex:1; overflow:hidden; border:2px solid var(--mt-ink); border-radius:999px; background:var(--mt-muted); }
+    #page-moneytrail .mt-progress-fill { height:100%; width:0%; border-radius:999px; background:var(--mt-secondary); transition:width .5s ease; }
+    #page-moneytrail .mt-progress-count { font-weight:800; font-size:.9rem; white-space:nowrap; }
+    #page-moneytrail .mt-hero { position:relative; overflow:hidden; border-bottom:2px solid var(--mt-ink); background:var(--mt-primary); color:#fff; }
+    #page-moneytrail .mt-hero-inner { position:relative; max-width:900px; margin:0 auto; padding:76px 20px 88px; text-align:center; }
+    #page-moneytrail .mt-pill { display:inline-flex; align-items:center; gap:8px; padding:7px 16px; border:2px solid var(--mt-ink); border-radius:999px; background:var(--mt-gold); color:#33250b; font-weight:800; font-size:.86rem; box-shadow:3px 3px 0 var(--mt-ink); }
+    #page-moneytrail .mt-hero h1 { margin:22px 0 0; font-family:'Fraunces',Georgia,serif; font-size:clamp(2.6rem,7vw,5rem); line-height:1.02; font-weight:800; letter-spacing:-1.5px; }
+    #page-moneytrail .mt-hero p { max-width:680px; margin:20px auto 0; font-size:1rem; line-height:1.7; color:rgba(255,255,255,.86); }
+    #page-moneytrail .mt-start-btn { margin-top:30px; display:inline-flex; align-items:center; gap:9px; border:2px solid var(--mt-ink); border-radius:999px; background:var(--mt-secondary); color:#fff; padding:13px 26px; font-weight:800; font-size:.98rem; cursor:pointer; box-shadow:4px 4px 0 var(--mt-ink); transition:transform .15s ease; }
+    #page-moneytrail .mt-start-btn:hover { transform:translateY(-3px); }
+    #page-moneytrail .mt-coin { position:absolute; color:rgba(255,255,255,.09); font-size:9rem; line-height:1; pointer-events:none; }
+    #page-moneytrail .mt-coin-left { left:-40px; top:50px; transform:rotate(12deg); }
+    #page-moneytrail .mt-coin-right { right:-55px; bottom:30px; transform:rotate(-12deg); font-size:12rem; }
+    #page-moneytrail .mt-trail-section { padding:70px 20px 30px; }
+    #page-moneytrail .mt-section-head { max-width:800px; margin:0 auto 42px; text-align:center; }
+    #page-moneytrail .mt-section-head h2 { margin:0; font-family:'Fraunces',Georgia,serif; font-size:clamp(2rem,4vw,3rem); font-weight:800; }
+    #page-moneytrail .mt-section-head p { max-width:560px; margin:10px auto 0; color:var(--mt-text-muted); line-height:1.6; }
+    #page-moneytrail .mt-journey { position:relative; max-width:960px; margin:0 auto; display:grid; gap:24px; }
+    #page-moneytrail .mt-journey::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:0; border-left:4px dashed rgba(25,22,31,.22); transform:translateX(-50%); pointer-events:none; }
+    #page-moneytrail .mt-stop { position:relative; display:flex; width:calc(50% - 30px); }
+    #page-moneytrail .mt-stop:nth-child(odd) { margin-right:auto; }
+    #page-moneytrail .mt-stop:nth-child(even) { margin-left:auto; }
+    #page-moneytrail .mt-node { position:absolute; top:50%; left:calc(100% + 30px); transform:translate(-50%,-50%); z-index:3; width:46px; height:46px; border:2px solid var(--mt-ink); border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--mt-gold); color:#33250b; font-weight:800; box-shadow:3px 3px 0 var(--mt-ink); }
+    #page-moneytrail .mt-stop:nth-child(even) .mt-node { left:-30px; }
+    #page-moneytrail .mt-stop.read .mt-node { background:var(--mt-secondary); color:#fff; }
+    #page-moneytrail .mt-stop-card { width:100%; text-align:left; border:2px solid var(--mt-ink); border-radius:18px; background:var(--mt-card); padding:16px; cursor:pointer; box-shadow:4px 4px 0 var(--mt-ink); transition:transform .15s ease,box-shadow .15s ease; }
+    #page-moneytrail .mt-stop-card:hover { transform:translateY(-4px); box-shadow:6px 6px 0 var(--mt-ink); }
+    #page-moneytrail .mt-stop-top { display:flex; align-items:flex-start; gap:12px; }
+    #page-moneytrail .mt-stop-icon { width:42px; height:42px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; border:2px solid var(--mt-ink); border-radius:12px; background:rgba(91,42,134,.10); color:var(--mt-primary); }
+    #page-moneytrail .mt-stop h3 { margin:1px 0 0; font-family:'Fraunces',Georgia,serif; font-size:1.05rem; line-height:1.15; font-weight:800; }
+    #page-moneytrail .mt-stop p { margin:5px 0 0; font-size:.84rem; line-height:1.45; color:var(--mt-text-muted); }
+    #page-moneytrail .mt-stop-meta { display:flex; align-items:center; gap:7px; margin-top:12px; font-size:.72rem; font-weight:700; color:var(--mt-text-muted); }
+    #page-moneytrail .mt-stop-badge { display:inline-flex; align-items:center; gap:5px; border:1px solid #cfc7dc; border-radius:999px; padding:4px 8px; }
+    #page-moneytrail .mt-quiz-cta { max-width:720px; margin:30px auto 0; padding:20px 20px 90px; }
+    #page-moneytrail .mt-quiz-card { border:2px solid var(--mt-ink); border-radius:24px; padding:30px; text-align:center; background:var(--mt-card); box-shadow:6px 6px 0 var(--mt-ink); }
+    #page-moneytrail .mt-quiz-card.unlocked { background:var(--mt-accent); color:#241207; }
+    #page-moneytrail .mt-quiz-icon { width:56px; height:56px; margin:0 auto; display:flex; align-items:center; justify-content:center; border:2px solid var(--mt-ink); border-radius:15px; background:var(--mt-bg); font-size:1.4rem; }
+    #page-moneytrail .mt-quiz-card h2 { margin:16px 0 0; font-family:'Fraunces',Georgia,serif; font-size:clamp(1.7rem,4vw,2.3rem); line-height:1.1; }
+    #page-moneytrail .mt-quiz-card p { max-width:500px; margin:10px auto 0; font-size:.9rem; line-height:1.6; color:var(--mt-text-muted); }
+    #page-moneytrail .mt-quiz-card.unlocked p { color:#3b2417; }
+    #page-moneytrail .mt-quiz-btn { margin-top:22px; display:inline-flex; align-items:center; gap:8px; border:2px solid var(--mt-ink); border-radius:999px; padding:12px 24px; background:var(--mt-muted); color:var(--mt-text-muted); font-weight:800; cursor:not-allowed; }
+    #page-moneytrail .mt-quiz-card.unlocked .mt-quiz-btn { background:var(--mt-secondary); color:#fff; box-shadow:3px 3px 0 var(--mt-ink); cursor:pointer; }
+    #page-moneytrail .mt-quiz-note { margin-top:10px; font-size:.72rem; font-weight:700; opacity:.8; }
+    #page-moneytrail .mt-modal-backdrop { display:none; position:fixed; inset:0; z-index:2000; align-items:flex-end; justify-content:center; padding:0; background:rgba(25,22,31,.42); backdrop-filter:blur(5px); }
+    #page-moneytrail .mt-modal-backdrop.open { display:flex; }
+    #page-moneytrail .mt-modal { width:100%; max-width:720px; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; border:2px solid var(--mt-ink); border-radius:26px 26px 0 0; background:var(--mt-bg); box-shadow:6px 6px 0 var(--mt-ink); animation:mt-pop .25s ease both; }
+    #page-moneytrail .mt-modal-head { display:flex; align-items:center; gap:12px; padding:14px; border-bottom:2px solid var(--mt-ink); background:var(--mt-primary); color:#fff; }
+    #page-moneytrail .mt-modal-icon { width:44px; height:44px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; border:2px solid var(--mt-ink); border-radius:14px; background:var(--mt-bg); color:var(--mt-primary); }
+    #page-moneytrail .mt-modal-heading { min-width:0; flex:1; }
+    #page-moneytrail .mt-modal-heading p { margin:0; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; opacity:.8; }
+    #page-moneytrail .mt-modal-heading h2 { margin:2px 0 0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-family:'Fraunces',Georgia,serif; font-size:1.15rem; }
+    #page-moneytrail .mt-close { width:38px; height:38px; border:2px solid var(--mt-ink); border-radius:50%; background:var(--mt-bg); color:var(--mt-ink); cursor:pointer; font-size:1rem; }
+    #page-moneytrail .mt-modal-body { overflow-y:auto; padding:20px; }
+    #page-moneytrail .mt-read-time { display:inline-flex; align-items:center; gap:6px; margin-bottom:16px; padding:5px 10px; border:2px solid var(--mt-ink); border-radius:999px; background:rgba(244,201,93,.32); font-size:.72rem; font-weight:800; }
+    #page-moneytrail .mt-content { display:grid; gap:16px; }
+    #page-moneytrail .mt-content p { margin:0; font-size:.94rem; line-height:1.7; color:rgba(25,22,31,.9); }
+    #page-moneytrail .mt-callout, #page-moneytrail .mt-list-item, #page-moneytrail .mt-link-item { border:2px solid var(--mt-ink); border-radius:16px; background:var(--mt-card); box-shadow:3px 3px 0 var(--mt-ink); }
+    #page-moneytrail .mt-callout { display:flex; gap:12px; padding:15px; }
+    #page-moneytrail .mt-callout.gold { background:rgba(244,201,93,.25); }
+    #page-moneytrail .mt-callout-icon { flex:0 0 auto; color:var(--mt-primary); margin-top:2px; }
+    #page-moneytrail .mt-callout-title { font-family:'Fraunces',Georgia,serif; font-weight:800; }
+    #page-moneytrail .mt-callout-text { margin-top:4px; font-size:.86rem; line-height:1.65; }
+    #page-moneytrail .mt-list, #page-moneytrail .mt-steps, #page-moneytrail .mt-warnings, #page-moneytrail .mt-links { display:grid; gap:10px; margin:0; padding:0; list-style:none; }
+    #page-moneytrail .mt-list-item { display:flex; gap:10px; padding:12px; }
+    #page-moneytrail .mt-check { width:25px; height:25px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; border:2px solid var(--mt-ink); border-radius:50%; background:var(--mt-secondary); color:#fff; font-size:.7rem; }
+    #page-moneytrail .mt-list-item p { font-size:.84rem; line-height:1.55; }
+    #page-moneytrail .mt-list-item strong { font-family:'Fraunces',Georgia,serif; }
+    #page-moneytrail .mt-step { display:flex; gap:10px; }
+    #page-moneytrail .mt-step-num { width:32px; height:32px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; border:2px solid var(--mt-ink); border-radius:50%; background:var(--mt-primary); color:#fff; font-weight:800; box-shadow:3px 3px 0 var(--mt-ink); }
+    #page-moneytrail .mt-step p { padding-top:3px; font-size:.84rem; }
+    #page-moneytrail .mt-warning { display:flex; gap:10px; padding:12px; border:2px solid var(--mt-ink); border-radius:14px; background:rgba(239,68,68,.10); box-shadow:3px 3px 0 var(--mt-ink); }
+    #page-moneytrail .mt-warning-icon { width:25px; height:25px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; border:2px solid var(--mt-ink); border-radius:50%; background:#ef4444; color:#fff; font-size:.7rem; }
+    #page-moneytrail .mt-warning p { font-size:.84rem; }
+    #page-moneytrail .mt-link-item { display:flex; gap:12px; padding:15px; }
+    #page-moneytrail .mt-link-item i { color:var(--mt-primary); margin-top:2px; }
+    #page-moneytrail .mt-subsection { padding:15px; border:2px solid var(--mt-ink); border-radius:16px; background:rgba(238,234,244,.65); }
+    #page-moneytrail .mt-subsection h4 { margin:0 0 10px; font-family:'Fraunces',Georgia,serif; font-size:1.1rem; }
+    #page-moneytrail .mt-subsection-inner { display:grid; gap:12px; }
+    #page-moneytrail .mt-modal-footer { display:flex; align-items:center; gap:12px; padding:14px; border-top:2px solid var(--mt-ink); background:var(--mt-card); }
+    #page-moneytrail .mt-round-btn { width:42px; height:42px; flex:0 0 auto; border:2px solid var(--mt-ink); border-radius:50%; background:var(--mt-bg); cursor:pointer; }
+    #page-moneytrail .mt-round-btn:disabled { opacity:.3; cursor:not-allowed; }
+    #page-moneytrail .mt-read-btn { flex:1; display:flex; align-items:center; justify-content:center; gap:8px; border:2px solid var(--mt-ink); border-radius:999px; padding:10px 16px; background:var(--mt-primary); color:#fff; font-weight:800; cursor:pointer; box-shadow:3px 3px 0 var(--mt-ink); }
+    #page-moneytrail .mt-read-btn.done { background:var(--mt-secondary); }
+    #page-moneytrail .mt-special { display:grid; gap:14px; }
+    #page-moneytrail .mt-calc { padding:18px; border:2px solid var(--mt-ink); border-radius:18px; background:var(--mt-card); box-shadow:4px 4px 0 var(--mt-ink); }
+    #page-moneytrail .mt-play { margin:0 0 14px; font-weight:800; font-family:'Fraunces',Georgia,serif; text-transform:uppercase; letter-spacing:.05em; font-size:.78rem; color:var(--mt-text-muted); }
+    #page-moneytrail .mt-slider-row { margin-bottom:18px; }
+    #page-moneytrail .mt-slider-head { display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:7px; }
+    #page-moneytrail .mt-slider-head label { font-size:.86rem; font-weight:700; }
+    #page-moneytrail .mt-slider-head span { font-family:'Fraunces',Georgia,serif; font-size:1.1rem; font-weight:800; color:var(--mt-primary); }
+    #page-moneytrail input[type=range] { width:100%; height:12px; appearance:none; border:2px solid var(--mt-ink); border-radius:999px; outline:none; background:linear-gradient(to right,var(--mt-secondary) 50%,var(--mt-muted) 50%); }
+    #page-moneytrail input[type=range]::-webkit-slider-thumb { appearance:none; width:24px; height:24px; border:2px solid var(--mt-ink); border-radius:50%; background:var(--mt-primary); cursor:pointer; }
+    #page-moneytrail input[type=range]::-moz-range-thumb { width:24px; height:24px; border:2px solid var(--mt-ink); border-radius:50%; background:var(--mt-primary); cursor:pointer; }
+    #page-moneytrail .mt-chart { height:160px; display:flex; align-items:flex-end; gap:6px; margin-top:18px; }
+    #page-moneytrail .mt-bar-wrap { flex:1; height:100%; display:flex; flex-direction:column; align-items:center; gap:4px; }
+    #page-moneytrail .mt-bar-stack { width:100%; height:100%; display:flex; flex-direction:column; justify-content:flex-end; }
+    #page-moneytrail .mt-bar-gain { width:100%; background:var(--mt-secondary); border-radius:3px 3px 0 0; }
+    #page-moneytrail .mt-bar-invested { width:100%; background:var(--mt-primary); }
+    #page-moneytrail .mt-bar-label { font-size:9px; font-weight:700; color:var(--mt-text-muted); }
+    #page-moneytrail .mt-totals { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px; }
+    #page-moneytrail .mt-total { padding:11px; border:2px solid var(--mt-ink); border-radius:12px; }
+    #page-moneytrail .mt-total:nth-child(1){background:rgba(91,42,134,.10)}
+    #page-moneytrail .mt-total:nth-child(2){background:rgba(72,168,104,.18)}
+    #page-moneytrail .mt-total:nth-child(3){background:rgba(244,201,93,.25)}
+    #page-moneytrail .mt-total small { font-size:.68rem; font-weight:700; }
+    #page-moneytrail .mt-total strong { display:block; margin-top:3px; font-family:'Fraunces',Georgia,serif; font-size:1rem; }
+    #page-moneytrail .mt-note { margin:10px 0 0; font-size:.7rem!important; color:var(--mt-text-muted)!important; }
+    #page-moneytrail .mt-glossary { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    #page-moneytrail .mt-flip { height:160px; perspective:1000px; cursor:pointer; background:none; border:0; padding:0; text-align:left; }
+    #page-moneytrail .mt-flip-inner { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .5s ease; }
+    #page-moneytrail .mt-flip.flipped .mt-flip-inner { transform:rotateY(180deg); }
+    #page-moneytrail .mt-flip-front,#page-moneytrail .mt-flip-back { position:absolute; inset:0; backface-visibility:hidden; border:2px solid var(--mt-ink); border-radius:16px; padding:14px; box-shadow:3px 3px 0 var(--mt-ink); display:flex; flex-direction:column; }
+    #page-moneytrail .mt-flip-front { justify-content:space-between; background:var(--mt-card); }
+    #page-moneytrail .mt-flip-back { justify-content:center; transform:rotateY(180deg); background:var(--mt-primary); color:#fff; }
+    #page-moneytrail .mt-flip-term { font-family:'Fraunces',Georgia,serif; font-size:1.1rem; font-weight:800; line-height:1.1; }
+    #page-moneytrail .mt-flip-hint { font-size:.68rem; font-weight:700; color:var(--mt-primary); }
+    #page-moneytrail .mt-flip-back .mt-flip-term { font-size:.78rem; text-transform:uppercase; opacity:.8; margin-bottom:5px; }
+    #page-moneytrail .mt-flip-back p { color:#fff; font-size:.78rem; line-height:1.45; }
+    #page-moneytrail .mt-risk { padding:18px; border:2px solid var(--mt-ink); border-radius:18px; background:var(--mt-card); box-shadow:4px 4px 0 var(--mt-ink); }
+    #page-moneytrail .mt-risk-labels { display:flex; justify-content:space-between; gap:10px; margin-bottom:14px; font-size:.65rem; font-weight:800; text-transform:uppercase; }
+    #page-moneytrail .mt-risk-labels span { padding:5px 9px; border:2px solid var(--mt-ink); border-radius:999px; }
+    #page-moneytrail .mt-risk-labels span:first-child { background:var(--mt-secondary); color:#fff; }
+    #page-moneytrail .mt-risk-labels span:last-child { background:var(--mt-accent); color:#fff; }
+    #page-moneytrail .mt-risk-track { height:16px; border:2px solid var(--mt-ink); border-radius:999px; background:linear-gradient(to right,var(--mt-secondary),var(--mt-gold),var(--mt-accent)); margin-bottom:14px; }
+    #page-moneytrail .mt-risk-assets { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+    #page-moneytrail .mt-risk-asset { padding:10px; border:2px solid var(--mt-ink); border-radius:12px; background:var(--mt-muted); text-align:center; box-shadow:2px 2px 0 var(--mt-ink); }
+    #page-moneytrail .mt-risk-asset strong { display:block; font-family:'Fraunces',Georgia,serif; font-size:.78rem; line-height:1.15; }
+    #page-moneytrail .mt-risk-asset small { display:block; margin-top:5px; color:var(--mt-text-muted); font-size:.62rem; line-height:1.25; }
+    #page-moneytrail .mt-risk-bar { height:6px; margin-top:8px; border-radius:999px; background:var(--mt-card); overflow:hidden; }
+    #page-moneytrail .mt-risk-bar i { display:block; height:100%; background:var(--mt-primary); }
+    @keyframes mt-pop { from{opacity:0;transform:scale(.96)} to{opacity:1;transform:scale(1)} }
+    @media(max-width:760px){
+      #page-moneytrail .mt-journey::before { left:23px; }
+      #page-moneytrail .mt-stop,#page-moneytrail .mt-stop:nth-child(even),#page-moneytrail .mt-stop:nth-child(odd) { width:calc(100% - 32px); margin-left:32px; margin-right:0; }
+      #page-moneytrail .mt-node,#page-moneytrail .mt-stop:nth-child(even) .mt-node { left:-9px; }
+      #page-moneytrail .mt-hero-inner { padding-top:58px; padding-bottom:68px; }
+      #page-moneytrail .mt-coin { display:none; }
+      #page-moneytrail .mt-glossary { grid-template-columns:1fr; }
+      #page-moneytrail .mt-risk-assets { grid-template-columns:repeat(2,1fr); }
+      #page-moneytrail .mt-risk-asset:last-child { grid-column:1/-1; }
+      #page-moneytrail .mt-totals { grid-template-columns:1fr; }
+      #page-moneytrail .mt-modal { max-height:94vh; border-radius:24px 24px 0 0; }
+      #page-moneytrail .mt-progress-inner { padding-left:14px; padding-right:14px; }
+      #page-moneytrail .mt-brand { display:none; }
+    }
+</style>
 </head>
 <body>
 
@@ -1417,6 +1575,7 @@
         <a href="#" onclick="showPage('intro'); return false;" class="site-nav-link active" id="nav-intro">Intro</a>
         <a href="#" onclick="showPage('quiz'); return false;" class="site-nav-link" id="nav-quiz">Quiz</a>
         <a href="#" onclick="showPage('investor'); return false;" class="site-nav-link" id="nav-investor">Smart Investor</a>
+        <a href="#" onclick="showPage('moneytrail'); return false;" class="site-nav-link" id="nav-moneytrail">Investing Trail</a>
       </nav>
     </div>
   </header>
@@ -3064,6 +3223,211 @@
       tag.innerHTML = `<i class="fa-solid fa-sun" style="color:var(--warning);"></i> Weekend Avg: ${formatINR(weekendAvg)} | Weekday Avg: ${formatINR(weekdayAvg)}`;
     }
 
+  </script>
+
+
+  <!-- ===================== INVESTING TRAIL PAGE ===================== -->
+  <div class="toolkit-page" id="page-moneytrail">
+    <div class="mt-shell">
+      <div class="mt-progress">
+        <div class="mt-progress-inner">
+          <span class="mt-logo"><i class="fa-solid fa-arrow-trend-up"></i></span>
+          <span class="mt-brand">MoneyTrail</span>
+          <div class="mt-progress-track"><div class="mt-progress-fill" id="mt-progress-fill"></div></div>
+          <span class="mt-progress-count" id="mt-progress-count">0/10</span>
+        </div>
+      </div>
+
+      <header class="mt-hero">
+        <div class="mt-coin mt-coin-left"><i class="fa-solid fa-coins"></i></div>
+        <div class="mt-coin mt-coin-right"><i class="fa-solid fa-coins"></i></div>
+        <div class="mt-hero-inner">
+          <span class="mt-pill"><i class="fa-solid fa-wand-magic-sparkles"></i> Personal Finance, minus the jargon</span>
+          <h1>Learn investing,<br>one stop at a time.</h1>
+          <p>Walk the trail below — ten bite-sized stops that take you from “why bother?” to opening a Demat account and building a portfolio. Then put it to the test in the quiz.</p>
+          <button type="button" class="mt-start-btn" onclick="mtScrollToTrail()">Start the trail <i class="fa-solid fa-arrow-down"></i></button>
+        </div>
+      </header>
+
+      <section class="mt-trail-section" id="mt-trail-section">
+        <div class="mt-section-head">
+          <h2>The Investing Trail</h2>
+          <p>Tap any stop to read it. Mark it done and watch the flag get closer.</p>
+        </div>
+        <div class="mt-journey" id="mt-journey"></div>
+      </section>
+
+      <section class="mt-quiz-cta" id="mt-quiz-cta"></section>
+    </div>
+
+    <div class="mt-modal-backdrop" id="mt-modal" aria-hidden="true">
+      <div class="mt-modal" role="dialog" aria-modal="true" aria-labelledby="mt-modal-title" onclick="event.stopPropagation()">
+        <div class="mt-modal-head">
+          <span class="mt-modal-icon" id="mt-modal-icon"><i class="fa-solid fa-arrow-trend-up"></i></span>
+          <div class="mt-modal-heading">
+            <p id="mt-modal-stop">Stop 1 of 10</p>
+            <h2 id="mt-modal-title"></h2>
+          </div>
+          <button class="mt-close" onclick="mtClose()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="mt-modal-body" id="mt-modal-body"></div>
+        <div class="mt-modal-footer">
+          <button class="mt-round-btn" id="mt-prev" onclick="mtPrev()" aria-label="Previous stop"><i class="fa-solid fa-arrow-left"></i></button>
+          <button class="mt-read-btn" id="mt-mark" onclick="mtMarkRead()"><i class="fa-solid fa-check"></i><span>Mark as read</span></button>
+          <button class="mt-round-btn" id="mt-next" onclick="mtNext()" aria-label="Next stop"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    /* ======================================================================
+       INVESTING TRAIL LOGIC
+       ====================================================================== */
+    (function () {
+      const MT_DATA = {"GLOSSARY": [{"term": "Stock / Share", "text": "A unit of ownership in a company. Owning a share legally makes you a part-owner, however small."}, {"term": "Stock Market", "text": "The organized marketplace (electronic today) where ownership units are bought and sold between investors."}, {"term": "Index (Sensex / Nifty)", "text": "A curated basket of top companies used as a benchmark. Nifty 50 tracks the top 50 on the NSE; Sensex tracks the top 30 on the BSE."}, {"term": "SEBI", "text": "The Securities and Exchange Board of India — the regulator that frames the rules and safeguards investor interests."}, {"term": "NSE / BSE", "text": "The two principal stock exchanges in India, where the actual buying and selling of securities takes place."}, {"term": "Financial Intermediaries", "text": "Brokers, depositories and clearing corporations working behind the scenes. A broker is the one you interact with directly — retail investors can’t trade on NSE/BSE without one."}], "RISK_ASSETS": [{"name": "Cash / FDs", "risk": 5, "note": "Safety over growth"}, {"name": "Debt", "risk": 30, "note": "Stable, lower returns"}, {"name": "Gold", "risk": 50, "note": "Inflation hedge"}, {"name": "Real Estate", "risk": 65, "note": "Income + appreciation"}, {"name": "Equity", "risk": 90, "note": "High growth, volatile"}], "TOPICS": [{"id": "why-invest", "n": 1, "title": "Why Should You Even Start Investing?", "teaser": "Idle money quietly loses value. Here’s how compounding fixes that.", "minutes": 3, "icon": "TrendingUp", "blocks": [{"type": "p", "text": "Every rupee sitting idle in your savings account is quietly losing purchasing power. Inflation ensures that the same ₹100 buys you much less later on than it does today."}, {"type": "p", "text": "Investing is essentially the process of putting your money into instruments that can generate returns beating this inflation rate — so your wealth actually grows in real terms rather than just on paper."}, {"type": "callout", "title": "The Power of Compounding", "text": "Often called the “eighth wonder of the world.” Instead of earning returns only on the money you initially invest, you also begin earning returns on the returns you’ve already made — so growth accelerates over time."}, {"type": "special", "kind": "compounding"}]}, {"id": "basic-terms", "n": 2, "title": "Basic Terms You’ll Keep Hearing", "teaser": "The six words behind every market conversation — as flip cards.", "minutes": 4, "icon": "BookOpen", "blocks": [{"type": "p", "text": "Before anything else, get comfortable with the vocabulary. Tap or hover each card to flip it and read the definition."}, {"type": "special", "kind": "glossary"}]}, {"id": "before-you-start", "n": 3, "title": "What You Need Before You Start", "teaser": "Four accounts and documents that unlock the markets.", "minutes": 2, "icon": "ClipboardCheck", "blocks": [{"type": "list", "items": [{"term": "PAN Card", "text": "A non-negotiable requirement for any market-linked investment in India."}, {"term": "Bank Account", "text": "Linked to your trading account for seamless movement of funds."}, {"term": "Demat Account", "text": "Holds your securities in electronic form — a digital locker for your investments."}, {"term": "Trading Account", "text": "The account through which you actually place your buy and sell orders."}]}]}, {"id": "open-demat", "n": 4, "title": "How to Open a Demat Account", "teaser": "Five steps from picking a broker to placing your first trade.", "minutes": 3, "icon": "FileSignature", "blocks": [{"type": "steps", "items": ["Select a SEBI-registered broker (e.g., Zerodha, Groww, Upstox, ICICI Direct).", "Download the broker’s app or visit their website.", "Complete your KYC — submit your PAN, Aadhaar, a cancelled cheque/bank proof, and a photograph.", "E-sign the account opening agreement, usually via Aadhaar-linked OTP.", "Your account is typically activated within 24–48 hours — then you can log in and start transacting."]}, {"type": "callout", "tone": "gold", "title": "Costs to keep in mind", "text": "Account opening fee: often free or minimal (₹0–300). AMC for the Demat account: roughly ₹200–500/year. Brokerage: a small fee per trade — though many brokers now offer zero brokerage on delivery-based equity trades."}]}, {"id": "ways-to-invest", "n": 5, "title": "Ways to Actually Invest", "teaser": "Stocks, mutual funds, SIPs, ETFs — and how they differ.", "minutes": 6, "icon": "Layers", "blocks": [{"type": "subsection", "title": "Direct Stocks", "blocks": [{"type": "p", "text": "Buying shares of individual companies through the trading terminal. This route demands more research — you’re personally responsible for evaluating each company, understanding the order book, bid-ask price, and how clearing and settlement move shares into your Demat account."}]}, {"type": "subsection", "title": "Mutual Funds", "blocks": [{"type": "p", "text": "A professionally managed, pooled investment vehicle. Your money, combined with thousands of other investors’, is invested across a diversified set of stocks or bonds by a fund manager."}, {"type": "list", "items": [{"term": "Actively managed", "text": "The manager selects and reshuffles holdings, aiming to outperform the market."}, {"term": "Index funds (passive)", "text": "Simply replicate a benchmark like the Nifty 50 — no active stock-picking, and typically a lower cost."}]}]}, {"type": "subsection", "title": "SIP (Systematic Investment Plan)", "blocks": [{"type": "p", "text": "Rather than a lump sum, a SIP invests a fixed amount at regular intervals into a fund of your choice. It removes the pressure of “timing the market,” and most fund houses let you start with as little as ₹500/month."}]}, {"type": "subsection", "title": "ETFs (Exchange Traded Funds)", "blocks": [{"type": "p", "text": "Similar to index funds in that they track a benchmark — but ETFs are listed and traded on the exchange like a stock, bought and sold in real time through your Demat and trading account rather than directly from a fund house."}]}, {"type": "subsection", "title": "Direct vs. Regular Plan · Expense Ratio", "blocks": [{"type": "list", "items": [{"term": "Regular Plan", "text": "Bought through a distributor who earns a commission — a slightly higher expense ratio."}, {"term": "Direct Plan", "text": "Bought straight from the AMC with no commission — a lower expense ratio and marginally better compounding."}]}, {"type": "p", "text": "The expense ratio is a small annual fee that covers managing the fund. It’s deducted from the fund’s assets, so you don’t pay it separately — but lower is better over the long run."}, {"type": "callout", "title": "Where to place these", "text": "Stocks & ETFs → your broker’s trading platform (Zerodha Kite, Groww, Upstox). Mutual Funds → platforms like Coin, Groww, or AMC websites directly. For most beginners, broad-based index funds via a regular SIP are a simple way to begin."}]}]}, {"id": "risk-return", "n": 6, "title": "Understanding Risk and Return", "teaser": "Higher potential returns almost always mean higher uncertainty.", "minutes": 2, "icon": "Scale", "blocks": [{"type": "p", "text": "One of the most fundamental principles of investing: risk and return generally go hand in hand. Investments offering higher potential returns usually involve greater uncertainty, while lower-risk investments tend to provide relatively stable but lower returns."}, {"type": "p", "text": "Different investors have different levels of risk tolerance depending on their financial goals, age, income, and investment horizon."}, {"type": "special", "kind": "risk"}]}, {"id": "asset-classes", "n": 7, "title": "Different Asset Classes", "teaser": "Investing isn’t only stocks — meet the five main categories.", "minutes": 3, "icon": "PieChart", "blocks": [{"type": "p", "text": "An asset class is a category of investments that share similar characteristics and behave differently under various market conditions."}, {"type": "list", "items": [{"term": "Equity (Stocks)", "text": "Ownership in companies — higher long-term growth potential but greater volatility."}, {"term": "Debt", "text": "Government securities, corporate bonds, debt funds — more stable but comparatively lower returns."}, {"term": "Gold", "text": "Often a hedge during periods of economic uncertainty and inflation."}, {"term": "Real Estate", "text": "Property that may generate rental income and long-term capital appreciation."}, {"term": "Cash & Equivalents", "text": "Savings accounts and fixed deposits — highly liquid, prioritizing safety over growth."}]}]}, {"id": "diversification", "n": 8, "title": "Diversification", "teaser": "Don’t put all your eggs in one basket.", "minutes": 2, "icon": "Boxes", "blocks": [{"type": "p", "text": "The core principle: don’t put all your eggs in one basket. Spreading your capital across different stocks, sectors, or asset classes reduces the impact any single poor-performing investment can have on your overall portfolio."}]}, {"id": "mistakes", "n": 9, "title": "Common Beginner Mistakes to Avoid", "teaser": "Five traps that catch almost every new investor.", "minutes": 3, "icon": "TriangleAlert", "blocks": [{"type": "warnings", "items": ["Investing before setting aside an emergency fund.", "Chasing “hot tips” from friends or social media without independent research.", "Panic-selling during a downturn instead of staying invested for the long term.", "Concentrating your entire portfolio into a single stock or sector.", "Overlooking the expense ratio when choosing between Direct and Regular plans."]}]}, {"id": "learn-more", "n": 10, "title": "Where to Learn More", "teaser": "Trusted, free resources to go beyond the basics.", "minutes": 1, "icon": "GraduationCap", "blocks": [{"type": "links", "items": [{"name": "Zerodha Varsity", "text": "Free, structured modules from beginner fundamentals to advanced trading and financial modeling."}, {"name": "SEBI Investor Education Portal", "text": "Official resources on safe and informed investing practices."}]}]}]};
+      const ICONS = {
+        TrendingUp:'fa-arrow-trend-up', BookOpen:'fa-book-open', ClipboardCheck:'fa-clipboard-check',
+        FileSignature:'fa-file-signature', Layers:'fa-layer-group', Scale:'fa-scale-balanced',
+        PieChart:'fa-chart-pie', Boxes:'fa-cubes', TriangleAlert:'fa-triangle-exclamation', GraduationCap:'fa-graduation-cap'
+      };
+      let readSet = new Set();
+      let activeIndex = null;
+
+      const $ = (id) => document.getElementById(id);
+      const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const icon = (name) => `<i class="fa-solid ${ICONS[name] || 'fa-circle'}"></i>`;
+      const money = (n) => n >= 10000000 ? `₹${(n/10000000).toFixed(2)} Cr` : n >= 100000 ? `₹${(n/100000).toFixed(2)} L` : `₹${Math.round(n).toLocaleString('en-IN')}`;
+
+      function updateProgress() {
+        const total = MT_DATA.TOPICS.length, count = readSet.size;
+        $('mt-progress-fill').style.width = `${Math.round(count / total * 100)}%`;
+        $('mt-progress-count').textContent = `${count}/${total}`;
+        renderQuizCta();
+        document.querySelectorAll('#page-moneytrail .mt-stop').forEach((el, i) => {
+          el.classList.toggle('read', readSet.has(MT_DATA.TOPICS[i].id));
+          const n = el.querySelector('.mt-node');
+          if (n) n.innerHTML = readSet.has(MT_DATA.TOPICS[i].id) ? icon('') + '<span style="margin-left:-1px">✓</span>' : MT_DATA.TOPICS[i].n;
+        });
+      }
+
+      function renderJourney() {
+        $('mt-journey').innerHTML = MT_DATA.TOPICS.map((t, i) => `
+          <article class="mt-stop ${readSet.has(t.id) ? 'read' : ''}">
+            <span class="mt-node">${readSet.has(t.id) ? '✓' : t.n}</span>
+            <button type="button" class="mt-stop-card" onclick="mtOpen(${i})" aria-label="Open stop ${t.n}: ${esc(t.title)}">
+              <div class="mt-stop-top">
+                <span class="mt-stop-icon">${icon(t.icon)}</span>
+                <div>
+                  <h3>${esc(t.title)}</h3>
+                  <p>${esc(t.teaser)}</p>
+                </div>
+              </div>
+              <div class="mt-stop-meta"><span class="mt-stop-badge"><i class="fa-regular fa-clock"></i> ${t.minutes} min</span>${readSet.has(t.id) ? '<span class="mt-stop-badge"><i class="fa-solid fa-check"></i> Completed</span>' : ''}</div>
+            </button>
+          </article>`).join('');
+      }
+
+      function blockHTML(block) {
+        if (block.type === 'p') return `<p>${esc(block.text)}</p>`;
+        if (block.type === 'callout') return `<div class="mt-callout ${block.tone === 'gold' ? 'gold' : ''}"><div class="mt-callout-icon">${icon('')}</div><div><div class="mt-callout-title">${esc(block.title)}</div><div class="mt-callout-text">${esc(block.text)}</div></div></div>`;
+        if (block.type === 'list') return `<ul class="mt-list">${block.items.map(it => `<li class="mt-list-item"><span class="mt-check">✓</span><p>${it.term ? `<strong>${esc(it.term)} — </strong>` : ''}${esc(it.text)}</p></li>`).join('')}</ul>`;
+        if (block.type === 'steps') return `<ol class="mt-steps">${block.items.map((it,i) => `<li class="mt-step"><span class="mt-step-num">${i+1}</span><p>${esc(it)}</p></li>`).join('')}</ol>`;
+        if (block.type === 'warnings') return `<ul class="mt-warnings">${block.items.map(it => `<li class="mt-warning"><span class="mt-warning-icon">×</span><p>${esc(it)}</p></li>`).join('')}</ul>`;
+        if (block.type === 'links') return `<div class="mt-links">${block.items.map(it => `<div class="mt-link-item"><i class="fa-solid fa-arrow-up-right-from-square"></i><div><strong style="font-family:'Fraunces',Georgia,serif">${esc(it.name)}</strong><p style="margin-top:4px">${esc(it.text)}</p></div></div>`).join('')}</div>`;
+        if (block.type === 'subsection') return `<section class="mt-subsection"><h4>${esc(block.title)}</h4><div class="mt-subsection-inner">${block.blocks.map(blockHTML).join('')}</div></section>`;
+        if (block.type === 'special') {
+          if (block.kind === 'compounding') return compoundingHTML();
+          if (block.kind === 'glossary') return glossaryHTML();
+          if (block.kind === 'risk') return riskHTML();
+        }
+        return '';
+      }
+
+      function topicBody(t) {
+        return `<div class="mt-read-time"><i class="fa-regular fa-clock"></i> ${t.minutes} min read</div><div class="mt-content">${t.blocks.map(blockHTML).join('')}</div>`;
+      }
+
+      function renderModal() {
+        if (activeIndex === null) return;
+        const t = MT_DATA.TOPICS[activeIndex];
+        $('mt-modal-icon').innerHTML = icon(t.icon);
+        $('mt-modal-stop').textContent = `Stop ${t.n} of ${MT_DATA.TOPICS.length}`;
+        $('mt-modal-title').textContent = t.title;
+        $('mt-modal-body').innerHTML = topicBody(t);
+        $('mt-prev').disabled = activeIndex === 0;
+        $('mt-next').disabled = activeIndex === MT_DATA.TOPICS.length - 1;
+        const done = readSet.has(t.id);
+        $('mt-mark').classList.toggle('done', done);
+        $('mt-mark').innerHTML = `<i class="fa-solid fa-check"></i><span>${done ? 'Completed' : 'Mark as read'}</span>`;
+        $('mt-modal').classList.add('open');
+        $('mt-modal').setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+        // initialize interactive widgets inside the modal
+        initSpecials();
+      }
+
+      function compoundingHTML() {
+        return `<div class="mt-calc"><div class="mt-play">Play with it →</div>
+          ${slider('mt-monthly','Monthly investment',500,50000,500,5000, v=>money(v))}
+          ${slider('mt-years','Time invested',1,40,1,15, v=>`${v} yr${v>1?'s':''}`)}
+          ${slider('mt-rate','Expected annual return',1,20,.5,12, v=>`${v}%`)}
+          <div class="mt-chart" id="mt-chart"></div>
+          <div class="mt-totals" id="mt-totals"></div>
+          <p class="mt-note">Illustrative only — real returns vary and are never guaranteed.</p>
+        </div>`;
+      }
+      function slider(id,label,min,max,step,value,display) {
+        const pct=(value-min)/(max-min)*100;
+        return `<div class="mt-slider-row"><div class="mt-slider-head"><label>${label}</label><span id="${id}-value">${display(value)}</span></div><input id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${value}" style="background:linear-gradient(to right,var(--mt-secondary) ${pct}%,var(--mt-muted) ${pct}%)"></div>`;
+      }
+      function updateSlider(id,min,max,display) {
+        const el=$(id), v=Number(el.value), pct=(v-min)/(max-min)*100;
+        el.style.background=`linear-gradient(to right,var(--mt-secondary) ${pct}%,var(--mt-muted) ${pct}%)`;
+        $(id+'-value').textContent=display(v);
+      }
+      function renderCompounding() {
+        const monthly=Number($('mt-monthly').value), years=Number($('mt-years').value), rate=Number($('mt-rate').value);
+        const r=rate/100/12, series=[];
+        for(let y=1;y<=years;y++){const n=y*12, inv=monthly*n, val=r===0?inv:monthly*((Math.pow(1+r,n)-1)/r)*(1+r);series.push({year:y,invested:inv,value:val});}
+        const last=series[series.length-1], gain=last.value-last.invested, maxVal=Math.max(...series.map(s=>s.value));
+        const step=Math.max(1,Math.ceil(series.length/12)), bars=series.filter((_,i)=>(i+1)%step===0||i===series.length-1);
+        $('mt-chart').innerHTML=bars.map(b=>{const inv=(b.invested/maxVal)*100, g=((b.value-b.invested)/maxVal)*100;return `<div class="mt-bar-wrap"><div class="mt-bar-stack"><div class="mt-bar-gain" style="height:${g}%" title="Returns: ${money(b.value-b.invested)}"></div><div class="mt-bar-invested" style="height:${inv}%" title="Invested: ${money(b.invested)}"></div></div><span class="mt-bar-label">${b.year}y</span></div>`}).join('');
+        $('mt-totals').innerHTML=`<div class="mt-total"><small>▮ You invest</small><strong>${money(last.invested)}</strong></div><div class="mt-total"><small>▮ Returns</small><strong>${money(gain)}</strong></div><div class="mt-total"><small>Total value</small><strong>${money(last.value)}</strong></div>`;
+      }
+      function glossaryHTML(){return `<div class="mt-glossary">${MT_DATA.GLOSSARY.map((g,i)=>`<button type="button" class="mt-flip" onclick="this.classList.toggle('flipped')" onmouseenter="this.classList.add('flipped')" onmouseleave="this.classList.remove('flipped')" aria-label="${esc(g.term)}"><div class="mt-flip-inner"><div class="mt-flip-front"><span style="color:var(--mt-text-muted)"><i class="fa-solid fa-rotate"></i></span><span class="mt-flip-term">${esc(g.term)}</span><span class="mt-flip-hint">Tap / hover to flip</span></div><div class="mt-flip-back"><span class="mt-flip-term">${esc(g.term)}</span><p>${esc(g.text)}</p></div></div></button>`).join('')}</div>`}
+      function riskHTML(){return `<div class="mt-risk"><div class="mt-risk-labels"><span>Lower risk · lower return</span><span>Higher risk · higher return</span></div><div class="mt-risk-track"></div><div class="mt-risk-assets">${MT_DATA.RISK_ASSETS.map(a=>`<div class="mt-risk-asset"><strong>${esc(a.name)}</strong><small>${esc(a.note)}</small><div class="mt-risk-bar"><i style="width:${a.risk}%"></i></div></div>`).join('')}</div></div>`}
+      function initSpecials(){
+        const m=$('mt-monthly'); if(m){
+          $('mt-monthly').addEventListener('input',()=>{updateSlider('mt-monthly',500,50000,v=>money(v));renderCompounding()});
+          $('mt-years').addEventListener('input',()=>{updateSlider('mt-years',1,40,v=>`${v} yr${v>1?'s':''}`);renderCompounding()});
+          $('mt-rate').addEventListener('input',()=>{updateSlider('mt-rate',1,20,v=>`${v}%`);renderCompounding()});
+          renderCompounding();
+        }
+      }
+
+      window.mtOpen = function(i){ activeIndex=i; renderModal(); };
+      window.mtClose = function(){ activeIndex=null; $('mt-modal').classList.remove('open'); $('mt-modal').setAttribute('aria-hidden','true'); document.body.style.overflow=''; };
+      window.mtPrev = function(){ if(activeIndex>0){activeIndex--;renderModal();} };
+      window.mtNext = function(){ if(activeIndex<MT_DATA.TOPICS.length-1){activeIndex++;renderModal();} };
+      window.mtMarkRead = function(){ const id=MT_DATA.TOPICS[activeIndex].id; if(readSet.has(id)) readSet.delete(id); else readSet.add(id); updateProgress(); renderModal(); };
+      window.mtScrollToTrail = function(){ $('mt-trail-section').scrollIntoView({behavior:'smooth',block:'start'}); };
+      $('mt-modal').addEventListener('click',function(e){if(e.target===this) window.mtClose();});
+      document.addEventListener('keydown',function(e){
+        if(!$('page-moneytrail').classList.contains('active-page') || activeIndex===null) return;
+        if(e.key==='Escape') window.mtClose();
+        if(e.key==='ArrowLeft') window.mtPrev();
+        if(e.key==='ArrowRight') window.mtNext();
+      });
+
+      function renderQuizCta(){
+        const total=MT_DATA.TOPICS.length,count=readSet.size, unlocked=count>=total, remaining=total-count;
+        $('mt-quiz-cta').innerHTML=`<div class="mt-quiz-card ${unlocked?'unlocked':''}"><div class="mt-quiz-icon">${unlocked?'<i class="fa-solid fa-champagne-glasses"></i>':'<i class="fa-solid fa-lock"></i>'}</div><h2>${unlocked?'The trail is complete!':'Reach the flag to unlock the quiz'}</h2><p>${unlocked?'You’ve read every stop. Time to test what you’ve learned in the flagpost quiz challenge.':`Read ${remaining} more stop${remaining>1?'s':''} to raise the flag and open the quiz.`}</p><button class="mt-quiz-btn" ${unlocked?'':'disabled'}>${unlocked?'<i class="fa-solid fa-flag"></i> Start the quiz':'<i class="fa-solid fa-lock"></i> Quiz locked'}</button>${unlocked?'<div class="mt-quiz-note">Quiz coming soon — we’ll build it next.</div>':''}</div>`;
+      }
+      window.initMoneyTrail = function(){ renderJourney(); renderQuizCta(); updateProgress(); };
+      initMoneyTrail();
+    })();
   </script>
 
 </body>
